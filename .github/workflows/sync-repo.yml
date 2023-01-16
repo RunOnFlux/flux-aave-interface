@@ -11,7 +11,8 @@ jobs:
     
     steps:
       - uses: actions/checkout@v3
-      
+        with:
+          token: ${{ secrets.GH_TOKEN }}
       - name: Upstream Sync
       # You may pin to the exact commit or the version.
       # uses: aormsby/Fork-Sync-With-Upstream-action@9e2e4fd0829a2fe8ca4b13693faac9230c414d51
@@ -20,7 +21,7 @@ jobs:
         # Branch receiving updates from the upstream repo, e.g. => main, master, prod
           target_sync_branch: main
         # Input for passing secrets.GITHUB_TOKEN when disabling persistent auth in the checkout step
-          target_repo_token: ${{ secrets.GH_TOKEN }}
+        # target_repo_token: ${{ secrets.GH_TOKEN }}
         # Upstream repository, e.g. => aormsby/Fork-Sync-With-Upstream-action
           upstream_sync_repo: aave/interface
         # Branch to sync from, e.g. => main, master, dev
