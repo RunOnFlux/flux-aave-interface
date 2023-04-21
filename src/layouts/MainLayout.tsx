@@ -7,8 +7,8 @@ import TopBarNotify from './TopBarNotify';
 
 const notifyText = (
   <Trans>
-    An upcoming AIP will adjust E-mode, and if passed, could cause account liquidations. See the
-    snapshot for more info
+    <strong>Important: </strong>An upcoming Aave Governance Proposal may adjust E-Mode and pose
+    liquidation risks to certain positions.
   </Trans>
 );
 
