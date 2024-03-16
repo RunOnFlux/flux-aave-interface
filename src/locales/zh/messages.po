@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: aave-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-03-08 18:05\n"
+"PO-Revision-Date: 2024-03-16 00:15\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -549,6 +549,10 @@ msgstr "由于 Aave 社区的决定，借贷被禁用。 <0>更多详情</0>"
 #: src/ui-config/errorMapping.tsx
 msgid "Borrowing is not enabled"
 msgstr "未启用借用"
+
+#: src/components/transactions/Warnings/MarketWarning.tsx
+msgid "Borrowing is temporarily unavailable due to a recent upgrade on the Metis network."
+msgstr ""
 
 #: src/hooks/useReserveActionState.tsx
 msgid "Borrowing is unavailable because you’re using Isolation mode. To manage Isolation mode visit your <0>Dashboard</0>."
@@ -1933,6 +1937,10 @@ msgstr "剩余债务"
 msgid "Remaining supply"
 msgstr "剩余供应量"
 
+#: src/components/transactions/StakeCooldown/StakeCooldownModalContent.tsx
+msgid "Remind me"
+msgstr ""
+
 #: src/components/transactions/GovRepresentatives/GovRepresentativesModalContent.tsx
 msgid "Remove"
 msgstr ""
@@ -2787,6 +2795,7 @@ msgstr ""
 msgid "Unstake now"
 msgstr "立即取消质押"
 
+#: src/components/transactions/StakeCooldown/StakeCooldownModalContent.tsx
 #: src/components/transactions/StakeCooldown/StakeCooldownModalContent.tsx
 msgid "Unstake window"
 msgstr "解质押窗口"
