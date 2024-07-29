@@ -12,6 +12,7 @@ import {
   AaveV3BaseSepolia,
   AaveV3BNB,
   AaveV3Ethereum,
+  AaveV3EthereumLido,
   AaveV3Fantom,
   AaveV3FantomTestnet,
   AaveV3Fuji,
@@ -65,7 +66,6 @@ export type MarketDataType = {
     WALLET_BALANCE_PROVIDER: string;
     L2_ENCODER?: string;
     UI_POOL_DATA_PROVIDER: string;
-    V3_1_UI_POOL_DATA_PROVIDER?: string;
     UI_INCENTIVE_DATA_PROVIDER?: string;
     COLLECTOR?: string;
     V3_MIGRATOR?: string;
@@ -95,6 +95,7 @@ export enum CustomMarket {
   proto_gnosis_v3 = 'proto_gnosis_v3',
   proto_bnb_v3 = 'proto_bnb_v3',
   proto_scroll_v3 = 'proto_scroll_v3',
+  proto_lido_v3 = 'proto_lido_v3',
   // v2
   proto_mainnet = 'proto_mainnet',
   proto_avalanche = 'proto_avalanche',
@@ -134,13 +135,42 @@ export const marketsData: {
       SWAP_COLLATERAL_ADAPTER: AaveV3Ethereum.SWAP_COLLATERAL_ADAPTER,
       WALLET_BALANCE_PROVIDER: AaveV3Ethereum.WALLET_BALANCE_PROVIDER,
       UI_POOL_DATA_PROVIDER: AaveV3Ethereum.UI_POOL_DATA_PROVIDER,
-      V3_1_UI_POOL_DATA_PROVIDER: '0x5c5228ac8bc1528482514af3e27e692495148717',
       UI_INCENTIVE_DATA_PROVIDER: AaveV3Ethereum.UI_INCENTIVE_DATA_PROVIDER,
       COLLECTOR: AaveV3Ethereum.COLLECTOR,
       GHO_TOKEN_ADDRESS: AaveV3Ethereum.ASSETS.GHO.UNDERLYING,
       GHO_UI_DATA_PROVIDER: AaveV3Ethereum.UI_GHO_DATA_PROVIDER,
       WITHDRAW_SWITCH_ADAPTER: AaveV3Ethereum.WITHDRAW_SWAP_ADAPTER,
       DEBT_SWITCH_ADAPTER: AaveV3Ethereum.DEBT_SWAP_ADAPTER,
+    },
+  },
+  [CustomMarket.proto_lido_v3]: {
+    marketTitle: 'Ethereum Lido Market',
+    market: CustomMarket.proto_lido_v3,
+    chainId: ChainId.mainnet,
+    v3: true,
+    enabledFeatures: {
+      governance: true,
+      staking: true,
+      liquiditySwap: true,
+      collateralRepay: true,
+      incentives: true,
+      withdrawAndSwitch: true,
+      debtSwitch: false,
+      switch: true,
+    },
+    disableCharts: true,
+    // subgraphUrl: `https://gateway-arbitrum.network.thegraph.com/api/${apiKey}/subgraphs/id/Cd2gEDVeqnjBn1hSeqFMitw8Q1iiyV9FYUZkLNRcL87g`,
+    addresses: {
+      LENDING_POOL_ADDRESS_PROVIDER: AaveV3EthereumLido.POOL_ADDRESSES_PROVIDER,
+      LENDING_POOL: AaveV3EthereumLido.POOL,
+      WETH_GATEWAY: AaveV3EthereumLido.WETH_GATEWAY,
+      REPAY_WITH_COLLATERAL_ADAPTER: AaveV3EthereumLido.REPAY_WITH_COLLATERAL_ADAPTER,
+      SWAP_COLLATERAL_ADAPTER: AaveV3EthereumLido.SWAP_COLLATERAL_ADAPTER,
+      WALLET_BALANCE_PROVIDER: AaveV3EthereumLido.WALLET_BALANCE_PROVIDER,
+      UI_POOL_DATA_PROVIDER: AaveV3EthereumLido.UI_POOL_DATA_PROVIDER,
+      UI_INCENTIVE_DATA_PROVIDER: AaveV3EthereumLido.UI_INCENTIVE_DATA_PROVIDER,
+      COLLECTOR: AaveV3Ethereum.COLLECTOR,
+      WITHDRAW_SWITCH_ADAPTER: AaveV3EthereumLido.WITHDRAW_SWAP_ADAPTER,
     },
   },
   [CustomMarket.proto_mainnet]: {
@@ -300,7 +330,6 @@ export const marketsData: {
       WETH_GATEWAY: AaveV3Base.WETH_GATEWAY,
       WALLET_BALANCE_PROVIDER: AaveV3Base.WALLET_BALANCE_PROVIDER,
       UI_POOL_DATA_PROVIDER: AaveV3Base.UI_POOL_DATA_PROVIDER,
-      V3_1_UI_POOL_DATA_PROVIDER: '0x5d4D4007A4c6336550DdAa2a7c0d5e7972eebd16',
       UI_INCENTIVE_DATA_PROVIDER: AaveV3Base.UI_INCENTIVE_DATA_PROVIDER,
       L2_ENCODER: AaveV3Base.L2_ENCODER,
       COLLECTOR: AaveV3Base.COLLECTOR,
@@ -349,7 +378,7 @@ export const marketsData: {
       WETH_GATEWAY: AaveV3Arbitrum.WETH_GATEWAY,
       WALLET_BALANCE_PROVIDER: AaveV3Arbitrum.WALLET_BALANCE_PROVIDER,
       UI_POOL_DATA_PROVIDER: AaveV3Arbitrum.UI_POOL_DATA_PROVIDER,
-      V3_1_UI_POOL_DATA_PROVIDER: '0x5d4d4007a4c6336550ddaa2a7c0d5e7972eebd16',
+
       UI_INCENTIVE_DATA_PROVIDER: AaveV3Arbitrum.UI_INCENTIVE_DATA_PROVIDER,
       L2_ENCODER: AaveV3Arbitrum.L2_ENCODER,
       COLLECTOR: AaveV3Arbitrum.COLLECTOR,
@@ -399,7 +428,7 @@ export const marketsData: {
       SWAP_COLLATERAL_ADAPTER: AaveV3Avalanche.SWAP_COLLATERAL_ADAPTER,
       WALLET_BALANCE_PROVIDER: AaveV3Avalanche.WALLET_BALANCE_PROVIDER,
       UI_POOL_DATA_PROVIDER: AaveV3Avalanche.UI_POOL_DATA_PROVIDER,
-      V3_1_UI_POOL_DATA_PROVIDER: '0x5598bbfa2f4fe8151f45bba0a3ede1b54b51a0a9',
+
       UI_INCENTIVE_DATA_PROVIDER: AaveV3Avalanche.UI_INCENTIVE_DATA_PROVIDER,
       COLLECTOR: AaveV3Avalanche.COLLECTOR,
       DEBT_SWITCH_ADAPTER: AaveV3Avalanche.DEBT_SWAP_ADAPTER,
@@ -543,7 +572,6 @@ export const marketsData: {
       WETH_GATEWAY: AaveV3Optimism.WETH_GATEWAY,
       WALLET_BALANCE_PROVIDER: AaveV3Optimism.WALLET_BALANCE_PROVIDER,
       UI_POOL_DATA_PROVIDER: AaveV3Optimism.UI_POOL_DATA_PROVIDER,
-      V3_1_UI_POOL_DATA_PROVIDER: '0x5598bbfa2f4fe8151f45bba0a3ede1b54b51a0a9',
       UI_INCENTIVE_DATA_PROVIDER: AaveV3Optimism.UI_INCENTIVE_DATA_PROVIDER,
       L2_ENCODER: AaveV3Optimism.L2_ENCODER,
       COLLECTOR: AaveV3Optimism.COLLECTOR,
@@ -575,7 +603,6 @@ export const marketsData: {
       SWAP_COLLATERAL_ADAPTER: AaveV3Polygon.SWAP_COLLATERAL_ADAPTER,
       WALLET_BALANCE_PROVIDER: AaveV3Polygon.WALLET_BALANCE_PROVIDER,
       UI_POOL_DATA_PROVIDER: AaveV3Polygon.UI_POOL_DATA_PROVIDER,
-      V3_1_UI_POOL_DATA_PROVIDER: '0x5598bbfa2f4fe8151f45bba0a3ede1b54b51a0a9',
       UI_INCENTIVE_DATA_PROVIDER: AaveV3Polygon.UI_INCENTIVE_DATA_PROVIDER,
       COLLECTOR: AaveV3Polygon.COLLECTOR,
       DEBT_SWITCH_ADAPTER: AaveV3Polygon.DEBT_SWAP_ADAPTER,
@@ -615,7 +642,7 @@ export const marketsData: {
       WETH_GATEWAY: '0x0', // not applicable for Metis
       WALLET_BALANCE_PROVIDER: AaveV3Metis.WALLET_BALANCE_PROVIDER,
       UI_POOL_DATA_PROVIDER: AaveV3Metis.UI_POOL_DATA_PROVIDER,
-      V3_1_UI_POOL_DATA_PROVIDER: '0xc851e6147dcE6A469CC33BE3121b6B2D4CaD2763',
+
       UI_INCENTIVE_DATA_PROVIDER: AaveV3Metis.UI_INCENTIVE_DATA_PROVIDER,
       COLLECTOR: AaveV3Metis.COLLECTOR,
     },
@@ -632,7 +659,7 @@ export const marketsData: {
       WETH_GATEWAY: AaveV3Gnosis.WETH_GATEWAY,
       WALLET_BALANCE_PROVIDER: AaveV3Gnosis.WALLET_BALANCE_PROVIDER,
       UI_POOL_DATA_PROVIDER: AaveV3Gnosis.UI_POOL_DATA_PROVIDER,
-      V3_1_UI_POOL_DATA_PROVIDER: '0xc851e6147dce6a469cc33be3121b6b2d4cad2763',
+
       UI_INCENTIVE_DATA_PROVIDER: AaveV3Gnosis.UI_INCENTIVE_DATA_PROVIDER,
       COLLECTOR: AaveV3Gnosis.COLLECTOR,
     },
@@ -658,7 +685,6 @@ export const marketsData: {
       SWAP_COLLATERAL_ADAPTER: AaveV3BNB.SWAP_COLLATERAL_ADAPTER,
       WALLET_BALANCE_PROVIDER: AaveV3BNB.WALLET_BALANCE_PROVIDER,
       UI_POOL_DATA_PROVIDER: AaveV3BNB.UI_POOL_DATA_PROVIDER,
-      V3_1_UI_POOL_DATA_PROVIDER: '0x78f8bd884c3d738b74b420540659c82f392820e0',
       UI_INCENTIVE_DATA_PROVIDER: AaveV3BNB.UI_INCENTIVE_DATA_PROVIDER,
       COLLECTOR: AaveV3BNB.COLLECTOR,
       DEBT_SWITCH_ADAPTER: AaveV3BNB.DEBT_SWAP_ADAPTER,
@@ -677,7 +703,6 @@ export const marketsData: {
       WETH_GATEWAY: AaveV3Scroll.WETH_GATEWAY,
       WALLET_BALANCE_PROVIDER: AaveV3Scroll.WALLET_BALANCE_PROVIDER,
       UI_POOL_DATA_PROVIDER: AaveV3Scroll.UI_POOL_DATA_PROVIDER,
-      V3_1_UI_POOL_DATA_PROVIDER: '0xc851e6147dce6a469cc33be3121b6b2d4cad2763',
       UI_INCENTIVE_DATA_PROVIDER: AaveV3Scroll.UI_INCENTIVE_DATA_PROVIDER,
       COLLECTOR: AaveV3Scroll.COLLECTOR,
     },
