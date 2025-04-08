@@ -19,6 +19,7 @@ export enum MeritAction {
   ETHEREUM_PRIME_SUPPLY_EZETH = 'ethereum-prime-supply-ezeth',
   SUPPLY_CBBTC_BORROW_USDC = 'ethereum-supply-cbbtc-borrow-usdc',
   SUPPLY_WBTC_BORROW_USDT = 'ethereum-supply-wbtc-borrow-usdt',
+  SUPPLY_EBTC_BORROW_WBTC_OR_CBBTC = 'ethereum-supply-ebtc-borrow-wbtc-or-cbbtc',
   ARBITRUM_SUPPLY_ETH = 'arbitrum-supply-weth',
   ARBITRUM_SUPPLY_WSTETH = 'arbitrum-supply-wsteth',
   ARBITRUM_SUPPLY_EZETH = 'arbitrum-supply-ezeth',
@@ -27,6 +28,8 @@ export enum MeritAction {
   BASE_SUPPLY_WSTETH = 'base-supply-wsteth',
   BASE_SUPPLY_WEETH = 'base-supply-weeth',
   BASE_SUPPLY_EZETH = 'base-supply-ezeth',
+  BASE_SUPPLY_EURC = 'base-supply-eurc',
+  BASE_BORROW_EURC = 'base-borrow-eurc',
   BASE_BORROW_USDC = 'base-borrow-usdc',
   BASE_BORROW_WSTETH = 'base-borrow-wsteth',
   AVALANCHE_SUPPLY_BTCB = 'avalanche-supply-btcb',
@@ -67,12 +70,14 @@ const antiLoopMessage =
 const antiLoopBorrowMessage =
   'Supplying of some assets may impact the amount of rewards you are eligible for. Please check the forum post for the full eligibility criteria.';
 
-
 const joinedEthCorrelatedIncentiveForumLink =
   'https://governance.aave.com/t/arfc-set-aci-as-emission-manager-for-liquidity-mining-programs/17898/56';
 
 const joinedEthCorrelatedIncentivePhase2ForumLink =
   'https://governance.aave.com/t/arfc-set-aci-as-emission-manager-for-liquidity-mining-programs/17898/70';
+
+const eurcForumLink =
+  'https://governance.aave.com/t/arfc-set-aci-as-emission-manager-for-liquidity-mining-programs/17898/77';
 
 const MERIT_DATA_MAP: Record<string, Record<string, MeritReserveIncentiveData[]>> = {
   [CustomMarket.proto_mainnet_v3]: {
@@ -93,6 +98,13 @@ const MERIT_DATA_MAP: Record<string, Record<string, MeritReserveIncentiveData[]>
         protocolAction: ProtocolAction.supply,
         customMessage: 'You must supply cbBTC and borrow USDC in order to receive merit rewards.',
       },
+      {
+        action: MeritAction.SUPPLY_EBTC_BORROW_WBTC_OR_CBBTC,
+        rewardTokenAddress: AaveV3Ethereum.ASSETS.eBTC.A_TOKEN,
+        rewardTokenSymbol: 'aEthCBBTC',
+        protocolAction: ProtocolAction.borrow,
+        customMessage: 'You must supply eBTC and borrow cbBTC in order to receive merit rewards.',
+      },
     ],
     USDC: [
       {
@@ -110,6 +122,23 @@ const MERIT_DATA_MAP: Record<string, Record<string, MeritReserveIncentiveData[]>
         rewardTokenSymbol: 'aEthUSDT',
         protocolAction: ProtocolAction.supply,
         customMessage: 'You must supply wBTC and borrow USDT in order to receive merit rewards.',
+      },
+      {
+        action: MeritAction.SUPPLY_EBTC_BORROW_WBTC_OR_CBBTC,
+        rewardTokenAddress: AaveV3Ethereum.ASSETS.eBTC.A_TOKEN,
+        rewardTokenSymbol: 'aEtheBTC',
+        protocolAction: ProtocolAction.borrow,
+        customMessage: 'You must supply eBTC and borrow WBTC in order to receive merit rewards.',
+      },
+    ],
+    eBTC: [
+      {
+        action: MeritAction.SUPPLY_EBTC_BORROW_WBTC_OR_CBBTC,
+        rewardTokenAddress: AaveV3Ethereum.ASSETS.eBTC.A_TOKEN,
+        rewardTokenSymbol: 'aEtheBTC',
+        protocolAction: ProtocolAction.supply,
+        customMessage:
+          'You must supply eBTC and borrow WBTC or cbBTC in order to receive merit rewards.',
       },
     ],
     USDT: [
@@ -274,6 +303,24 @@ const MERIT_DATA_MAP: Record<string, Record<string, MeritReserveIncentiveData[]>
         protocolAction: ProtocolAction.supply,
         customMessage: antiLoopMessage,
         customForumLink: joinedEthCorrelatedIncentivePhase2ForumLink,
+      },
+    ],
+    EURC: [
+      {
+        action: MeritAction.BASE_SUPPLY_EURC,
+        rewardTokenAddress: AaveV3Base.ASSETS.EURC.A_TOKEN,
+        rewardTokenSymbol: 'aBasEURC',
+        protocolAction: ProtocolAction.supply,
+        customMessage: antiLoopMessage,
+        customForumLink: eurcForumLink,
+      },
+      {
+        action: MeritAction.BASE_BORROW_EURC,
+        rewardTokenAddress: AaveV3Base.ASSETS.EURC.A_TOKEN,
+        rewardTokenSymbol: 'aBasEURC',
+        protocolAction: ProtocolAction.borrow,
+        customMessage: antiLoopBorrowMessage,
+        customForumLink: eurcForumLink,
       },
     ],
   },
