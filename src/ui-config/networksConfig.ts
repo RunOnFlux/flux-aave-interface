@@ -434,7 +434,7 @@ export const prodNetworkConfig: Record<string, BaseNetworkConfig> = {
     baseAssetSymbol: 'XPL',
     wrappedBaseAssetSymbol: 'WXPL',
     baseAssetDecimals: 18,
-    explorerLink: 'https://plasma.to',
+    explorerLink: 'https://plasmascan.to',
     networkLogoPath: '/icons/networks/plasma.svg',
     wagmiChain: plasma,
   },
@@ -447,7 +447,7 @@ export const prodNetworkConfig: Record<string, BaseNetworkConfig> = {
     explorerLink: 'https://explorer.inkonchain.com/',
     networkLogoPath: '/icons/networks/ink.svg',
     wagmiChain: ink,
-  }
+  },
 };
 
 export const networkConfigs = {
