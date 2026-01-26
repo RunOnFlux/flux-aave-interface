@@ -47,6 +47,10 @@ const NETWORK_CONFIG: Record<number, { network: string; apiKey: string }> = {
 };
 
 function getRpcUrl(chainId: number): string | null {
+  // Note: workaround for mantle mainnet
+  if (chainId === 5000) {
+    return 'https://rpc.mantle.xyz';
+  }
   const config = NETWORK_CONFIG[chainId];
   if (!config) return null;
   return `https://${config.network}.g.alchemy.com/v2/${config.apiKey}`;
