@@ -30,7 +30,7 @@ import {
 } from 'src/utils/getMaxAmountAvailableToSupply';
 import { calculateHFAfterSupply } from 'src/utils/hfUtils';
 import { isFeatureEnabled } from 'src/utils/marketsAndNetworksConfig';
-import { roundToTokenDecimals } from 'src/utils/utils';
+import { replaceUnderscoresWithSpaces, roundToTokenDecimals } from 'src/utils/utils';
 import { useShallow } from 'zustand/shallow';
 
 import {
@@ -261,12 +261,13 @@ export const SupplyModalContent = React.memo(
       return calculateHFAfterSupply(user, poolReserve, amountInEth);
     })();
 
-    // Override collateral type if switching e-modes changes collateral eligibility
+    // Override collateral type based on the selected e-mode's collateral eligibility,
+    // since getAssetCollateralType only considers base config and doesn't account for e-mode
     const effectiveCollateralType = (() => {
-      if (!needsEmodeSwitch) return collateralType;
+      if (!hasEmodeOptions) return collateralType;
       const targetEmode = poolReserve.eModes.find((e) => e.id === selectedEmodeId);
       if (selectedEmodeId === 0) {
-        // Switching to no e-mode — use base config
+        // Default / no e-mode — use base config
         return Number(poolReserve.baseLTVasCollateral) > 0 && poolReserve.usageAsCollateralEnabled
           ? CollateralType.ENABLED
           : CollateralType.UNAVAILABLE;
@@ -274,7 +275,11 @@ export const SupplyModalContent = React.memo(
       if (targetEmode && targetEmode.collateralEnabled && !targetEmode.ltvzeroEnabled) {
         return CollateralType.ENABLED;
       }
-      return CollateralType.DISABLED;
+      if (targetEmode && targetEmode.collateralEnabled && targetEmode.ltvzeroEnabled) {
+        return CollateralType.DISABLED;
+      }
+      // Not in this category's collateral bitmap — fall back to base
+      return collateralType;
     })();
 
     const supplyActionsProps = {
@@ -367,7 +372,8 @@ export const SupplyModalContent = React.memo(
               text={
                 selectedEmodeId === 0
                   ? t`Disabled`
-                  : eModes[selectedEmodeId]?.label || t`Category ${selectedEmodeId}`
+                  : replaceUnderscoresWithSpaces(eModes[selectedEmodeId]?.label) ||
+                    t`Category ${selectedEmodeId}`
               }
             />
           )}
@@ -386,8 +392,9 @@ export const SupplyModalContent = React.memo(
             <Typography variant="caption">
               {user.userEmodeCategoryId === 0 ? (
                 <Trans>
-                  This transaction will enable E-Mode ({eModes[selectedEmodeId]?.label}). Borrowing
-                  will be restricted to assets within this category.
+                  This transaction will enable E-Mode (
+                  {replaceUnderscoresWithSpaces(eModes[selectedEmodeId]?.label)}). Borrowing will be
+                  restricted to assets within this category.
                 </Trans>
               ) : selectedEmodeId === 0 ? (
                 <Trans>
@@ -396,9 +403,10 @@ export const SupplyModalContent = React.memo(
                 </Trans>
               ) : (
                 <Trans>
-                  This transaction will switch E-Mode from {eModes[user.userEmodeCategoryId]?.label}{' '}
-                  to {eModes[selectedEmodeId]?.label}. Borrowing will be restricted to assets within
-                  the new category.
+                  This transaction will switch E-Mode from{' '}
+                  {replaceUnderscoresWithSpaces(eModes[user.userEmodeCategoryId]?.label)} to{' '}
+                  {replaceUnderscoresWithSpaces(eModes[selectedEmodeId]?.label)}. Borrowing will be
+                  restricted to assets within the new category.
                 </Trans>
               )}
               {supplyUnWrapped && (
