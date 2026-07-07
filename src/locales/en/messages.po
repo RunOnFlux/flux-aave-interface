@@ -626,6 +626,10 @@ msgstr "Data couldn't be fetched, please reload graph."
 msgid "Dashboard"
 msgstr "Dashboard"
 
+#: src/modules/stkGho/StkGhoCard.tsx
+msgid "Rewards for legacy Savings GHO have ended. Migrate to continue earning."
+msgstr "Rewards for legacy Savings GHO have ended. Migrate to continue earning."
+
 #: src/modules/dashboard/lists/BorrowAssetsList/BorrowAssetsList.tsx
 msgid "Be careful - You are very close to liquidation. Consider depositing more collateral or paying down some of your borrowed positions"
 msgstr "Be careful - You are very close to liquidation. Consider depositing more collateral or paying down some of your borrowed positions"
@@ -1616,10 +1620,6 @@ msgstr "Please connect your wallet to swap debt."
 msgid "Ethereum"
 msgstr "Ethereum"
 
-#: src/modules/stkGho/StkGhoCard.tsx
-msgid "Rewards for legacy Savings GHO are ending. Migrate to continue earning."
-msgstr "Rewards for legacy Savings GHO are ending. Migrate to continue earning."
-
 #: src/components/AssetCategoryMultiselect.tsx
 #: src/components/MarketAssetCategoryFilter.tsx
 msgid "All"
@@ -1901,6 +1901,7 @@ msgid "Legacy Savings GHO (stkGHO)"
 msgstr "Legacy Savings GHO (stkGHO)"
 
 #: src/components/incentives/MeritIncentivesTooltipContent.tsx
+#: src/components/incentives/MerklIncentivesTooltipContent.tsx
 msgid "Visit <0><1>https://aave.self.xyz/</1></0> to get started with Self’s ZK-powered proof-of-humanity authentication."
 msgstr "Visit <0><1>https://aave.self.xyz/</1></0> to get started with Self’s ZK-powered proof-of-humanity authentication."
 
@@ -2040,6 +2041,10 @@ msgstr "GHO balance"
 msgid "Borrow"
 msgstr "Borrow"
 
+#: src/components/AssetCategoryMultiselect.tsx
+msgid "Principal Tokens"
+msgstr "Principal Tokens"
+
 #: src/modules/reserve-overview/ReserveEModePanel.tsx
 #: src/modules/reserve-overview/SupplyInfo.tsx
 msgid "Liquidation penalty"
@@ -2072,6 +2077,10 @@ msgstr "User does not have outstanding stable rate debt on this reserve"
 #: src/modules/bridge/BridgeTopPanel.tsx
 msgid "Bridge history"
 msgstr "Bridge history"
+
+#: src/components/incentives/MerklIncentivesTooltipContent.tsx
+msgid "Double your yield by <0><1>verifying your humanity through Self</1></0>."
+msgstr "Double your yield by <0><1>verifying your humanity through Self</1></0>."
 
 #: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsList.tsx
 msgid "Show assets with small balance"
@@ -2662,10 +2671,6 @@ msgstr "You did not participate in this proposal"
 #: src/components/transactions/Swap/warnings/postInputs/LowHealthFactorWarning.tsx
 msgid "Low health factor after swap. Your position will carry a higher risk of liquidation."
 msgstr "Low health factor after swap. Your position will carry a higher risk of liquidation."
-
-#: src/components/AssetCategoryMultiselect.tsx
-msgid "Principle Tokens"
-msgstr "Principle Tokens"
 
 #: src/ui-config/menu-items/index.tsx
 msgid "Governance"
@@ -4210,6 +4215,10 @@ msgstr "Dark mode"
 #: src/modules/markets/MarketsTopPanel.tsx
 msgid "Total market size"
 msgstr "Total market size"
+
+#: src/components/incentives/MerklIncentivesTooltipContent.tsx
+msgid "Eligible for incentives through Merkl and Boosted Yield via Self."
+msgstr "Eligible for incentives through Merkl and Boosted Yield via Self."
 
 #: src/components/transactions/FlowCommons/TxModalDetails.tsx
 msgid "Transaction overview"
