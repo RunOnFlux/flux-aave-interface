@@ -1,5 +1,4 @@
 import { SearchIcon } from '@heroicons/react/outline';
-import { ExternalLinkIcon } from '@heroicons/react/solid';
 import { t, Trans } from '@lingui/macro';
 import {
   Box,
@@ -17,6 +16,7 @@ import {
   useTheme,
 } from '@mui/material';
 import React, { useMemo, useRef, useState } from 'react';
+import { ArrowUpRightIcon } from 'src/components/icons/ArrowUpRightIcon';
 import { ChevronUpDownIcon } from 'src/components/icons/ChevronUpDownIcon';
 import { FAVOURITE_STAR_COLOR, StarIcon } from 'src/components/icons/StarIcon';
 import { ShimmerText } from 'src/components/ShimmerText';
@@ -240,6 +240,11 @@ const MARKET_DESCRIPTIONS: Partial<Record<CustomMarket, React.ReactNode>> = {
   [CustomMarket.proto_aptos_v3]: onNetwork('Aptos'),
 };
 
+// Trailing "this leaves the app" marker, shared by the external-market rows and the V4 links.
+const EXTERNAL_LINK_ICON = (
+  <ArrowUpRightIcon sx={{ fontSize: '16px', color: 'fg-3', ml: 0.5, flexShrink: 0 }} />
+);
+
 export const AAVE_PRO_URL = 'https://pro.aave.com/';
 
 type V4Link = {
@@ -275,7 +280,16 @@ const V4_LINKS: V4Link[] = [
   },
 ];
 
-export const MarketSwitcher = () => {
+interface MarketSwitcherProps {
+  /**
+   * Drops the current market's blurb from under the trigger. For pages whose header needs that
+   * line to describe the page rather than the market — the copy then belongs in the page header's
+   * own description slot, outside this button.
+   */
+  hideDescription?: boolean;
+}
+
+export const MarketSwitcher = ({ hideDescription }: MarketSwitcherProps) => {
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -448,11 +462,7 @@ export const MarketSwitcher = () => {
         >
           {marketNaming.name} {market.isFork ? 'Fork' : ''}
         </Typography>
-        {market.externalUrl && (
-          <SvgIcon sx={{ fontSize: '14px', color: 'fg-3', ml: 0.5, flexShrink: 0 }}>
-            <ExternalLinkIcon />
-          </SvgIcon>
-        )}
+        {market.externalUrl && EXTERNAL_LINK_ICON}
         <IconButton
           className="grid-fav-btn"
           size="small"
@@ -538,9 +548,7 @@ export const MarketSwitcher = () => {
             {label}
           </Typography>
         )}
-        <SvgIcon sx={{ fontSize: '14px', color: 'fg-3', ml: 0.5, flexShrink: 0 }}>
-          <ExternalLinkIcon />
-        </SvgIcon>
+        {EXTERNAL_LINK_ICON}
       </Box>
     );
   };
@@ -818,7 +826,7 @@ export const MarketSwitcher = () => {
           <ChevronUpDownIcon sx={{ ml: 1, color: 'fg-3', mt: '0.3125rem' }} />
         </Box>
 
-        {MARKET_DESCRIPTIONS[currentMarket] && (
+        {!hideDescription && MARKET_DESCRIPTIONS[currentMarket] && (
           <Typography
             variant="description"
             sx={{
